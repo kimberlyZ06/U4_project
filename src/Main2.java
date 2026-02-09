@@ -3,8 +3,9 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Main {
+public class Main2 {
     public static void main(String[] args) {
+
         String fileData = "";
         try {
             File f = new File("src/data");
@@ -19,6 +20,9 @@ public class Main {
         }
 
         String[] lines = fileData.split("\n");
+
+        Hand[] allHands = new Hand[lines.length];
+
         int fiveOfAKind = 0;
         int fourOfAKind = 0;
         int fullHouse = 0;
@@ -26,8 +30,10 @@ public class Main {
         int twoPair = 0;
         int onePair = 0;
         int highCard = 0;
+        int handCombo = 0;
 
-        Hand[] allHands = new Hand[5];
+        int index = 0;
+
         for (String line : lines) {
             int[] counter = new int[13];
             String[] bid = line.split("\\|");
@@ -38,44 +44,44 @@ public class Main {
             int[] values = new int[numbers.length];
             String[] object = new String[numbers.length];
 
-            for (int i = 0; i < numbers.length; i++) {
-                if (numbers[i].equals("Jack")) {
-                    values[i] = 11;
-                } else if (numbers[i].equals("Queen")) {
-                    values[i] = 12;
-                } else if (numbers[i].equals("King")) {
-                    values[i] = 13;
-                } else if (numbers[i].equals("Ace")) {
-                    values[i] = 14;
+            for (int j = 0; j < numbers.length; j++) {
+                if (numbers[j].equals("Jack")) {
+                    values[j] = 11;
+                } else if (numbers[j].equals("Queen")) {
+                    values[j] = 12;
+                } else if (numbers[j].equals("King")) {
+                    values[j] = 13;
+                } else if (numbers[j].equals("Ace")) {
+                    values[j] = 14;
                 } else {
-                    values[i] = Integer.parseInt(numbers[i]);
+                    values[j] = Integer.parseInt(numbers[j]);
                 }
             }
-            System.out.println(Arrays.toString(values));
 
-            for (int i = 2; i <= 14 ; i++) {
+            for (int k = 2; k <= 14 ; k++) {
                 for (int j = 0; j < 5; j++){
-                    if (values[j] == i){
-                        counter[i-2] += 1;
+                    if (values[j] == k){
+                        counter[k -2] += 1;
                     }
                 }
             }
-            System.out.println(Arrays.toString(counter));
 
             int triplet = 0;
             int two = 0;
             int singles = 0;
 
-            for (int i = 0; i < 13; i++) {
-                if (counter[i] == 5){
+            for (int l = 0; l < 13; l++) {
+                if (counter[l] == 5){
                     fiveOfAKind += 1;
-                } else if (counter[i] == 4){
+                    handCombo = 7;
+                } else if (counter[l] == 4){
                     fourOfAKind += 1;
-                } else if (counter[i] == 3){
+                    handCombo = 6;
+                } else if (counter[l] == 3){
                     triplet += 1;
-                } else if (counter[i] == 2) {
+                } else if (counter[l] == 2) {
                     two += 1;
-                } else if (counter[i] == 1) {
+                } else if (counter[l] == 1) {
                     singles += 1;
                 }
             }
@@ -83,24 +89,35 @@ public class Main {
 
             if (triplet == 1 && two == 1){
                 fullHouse += 1;
-//                objects[i] = new Hand
+                handCombo = 5;
             } else if (triplet == 1) {
                 threeOfAKind += 1;
+                handCombo = 4;
             } else if (two == 2){
                 twoPair += 1;
+                handCombo = 3;
             } else if (two == 1) {
                 onePair += 1;
+                handCombo = 2;
             } else if (singles == 5) {
                 highCard += 1;
+                handCombo = 1;
             }
+
+            Hand h = new Hand(values, actualBidValue, handCombo);
+            allHands[index] = h;
+
+            index++;
         }
 
-        System.out.println("Five of a kind: " + fiveOfAKind);
-        System.out.println("Full house: " + fullHouse);
-        System.out.println("Four of a kind: " + fourOfAKind);
-        System.out.println("Three of a kind: " + threeOfAKind);
-        System.out.println("Two pair: " + twoPair);
-        System.out.println("One pair: " + onePair);
-        System.out.println("high card: " + highCard);
+        for (int i = 0; i < allHands.length; i++){
+            System.out.println("----------");
+            System.out.println(allHands[i].getHand());
+            System.out.println(allHands[i].getBid());
+            System.out.println(Arrays.toString(allHands[i].getCards()));
+        }
+
+
+
     }
-    }
+}

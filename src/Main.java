@@ -5,13 +5,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-         int fiveOfAKind = 0;
-         int fourOfAKind = 0;
-         int fullHouse = 0;
-         int threeOfAKind = 0;
-         int twoPair = 0;
-         int onePair = 0;
-         int highCard = 0;
         String fileData = "";
         try {
             File f = new File("src/data");
@@ -26,33 +19,24 @@ public class Main {
         }
 
         String[] lines = fileData.split("\n");
+        int fiveOfAKind = 0;
+        int fourOfAKind = 0;
+        int fullHouse = 0;
+        int threeOfAKind = 0;
+        int twoPair = 0;
+        int onePair = 0;
+        int highCard = 0;
 
-//        for(String line : lines){
-//            String[] bid = line.split("\\|");
-//            String bidValue = bid[0];
-//
-//            Hand hand1 = new Hand(bidValue);
-//            System.out.println(Arrays.toString(hand1.getCardvals()));
-//            System.out.println(hand1.handtype(hand1.getCardvals()));
-//        }
-
-
-//        System.out.println("Five of a kind: " + fiveOfAKind);
-//        System.out.println("Four of a kind: " + fourOfAKind);
-//        System.out.println("Full house: " + fullHouse);
-//        System.out.println("Three of a Kind: " + threeOfAKind);
-//        System.out.println("Two pair: " + twoPair);
-//        System.out.println("One pair: " + onePair);
-//        System.out.println("High card: " + highCard);
-
-
+        Hand[] allHands = new Hand[5];
         for (String line : lines) {
             int[] counter = new int[13];
             String[] bid = line.split("\\|");
             String bidValue = bid[0];
+            int actualBidValue = Integer.parseInt(bid[1]);
 
             String[] numbers = bidValue.split(",");
             int[] values = new int[numbers.length];
+            String[] object = new String[numbers.length];
 
             for (int i = 0; i < numbers.length; i++) {
                 if (numbers[i].equals("Jack")) {
@@ -99,6 +83,7 @@ public class Main {
 
             if (triplet == 1 && two == 1){
                 fullHouse += 1;
+//                objects[i] = new Hand
             } else if (triplet == 1) {
                 threeOfAKind += 1;
             } else if (two == 2){
@@ -118,4 +103,4 @@ public class Main {
         System.out.println("One pair: " + onePair);
         System.out.println("high card: " + highCard);
     }
-}
+    }

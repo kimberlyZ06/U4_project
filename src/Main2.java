@@ -58,10 +58,10 @@ public class Main2 {
                 }
             }
 
-            for (int k = 2; k <= 14 ; k++) {
-                for (int j = 0; j < 5; j++){
-                    if (values[j] == k){
-                        counter[k -2] += 1;
+            for (int k = 2; k <= 14; k++) {
+                for (int j = 0; j < 5; j++) {
+                    if (values[j] == k) {
+                        counter[k - 2] += 1;
                     }
                 }
             }
@@ -71,13 +71,13 @@ public class Main2 {
             int singles = 0;
 
             for (int l = 0; l < 13; l++) {
-                if (counter[l] == 5){
+                if (counter[l] == 5) {
                     fiveOfAKind += 1;
                     handCombo = 7;
-                } else if (counter[l] == 4){
+                } else if (counter[l] == 4) {
                     fourOfAKind += 1;
                     handCombo = 6;
-                } else if (counter[l] == 3){
+                } else if (counter[l] == 3) {
                     triplet += 1;
                 } else if (counter[l] == 2) {
                     two += 1;
@@ -87,13 +87,13 @@ public class Main2 {
             }
 
 
-            if (triplet == 1 && two == 1){
+            if (triplet == 1 && two == 1) {
                 fullHouse += 1;
                 handCombo = 5;
             } else if (triplet == 1) {
                 threeOfAKind += 1;
                 handCombo = 4;
-            } else if (two == 2){
+            } else if (two == 2) {
                 twoPair += 1;
                 handCombo = 3;
             } else if (two == 1) {
@@ -104,20 +104,45 @@ public class Main2 {
                 handCombo = 1;
             }
 
-            Hand h = new Hand(values, actualBidValue, handCombo);
+            Hand h = new Hand(values, actualBidValue, handCombo, 0);
             allHands[index] = h;
 
             index++;
         }
 
-        for (int i = 0; i < allHands.length; i++){
-            System.out.println("----------");
-            System.out.println(allHands[i].getHand());
-            System.out.println(allHands[i].getBid());
-            System.out.println(Arrays.toString(allHands[i].getCards()));
+//        for (int i = 0; i < allHands.length; i++) {
+//            for (int j = 0; j < i; j++) {
+//                System.out.println("i: " + i + " j: " + j);
+//                if (allHands[i].getHand() > allHands[j].getHand()) {
+//                    allHands[i].setRank(allHands[j].getRank() + 1);
+//                    System.out.println(allHands[i].getRank());
+//                } else if (allHands[i].getHand() < allHands[j].getHand()) {
+//                    allHands[i].setRank(allHands[j].getRank());
+//                    allHands[j].setRank(allHands[j].getRank() + 1);
+//                } else if (allHands[i].getHand() == allHands[j].getHand()) {
+//                    for (int k = 0; k < 5; k++) {
+//                        int[] a = allHands[i].getCards();
+//                        int[] b = allHands[j].getCards();
+//
+//                        if (a[k] > b[k]) {
+//                            allHands[i].setRank(allHands[i].getRank() + 1);
+//                            System.out.println(allHands[i].getRank());
+//                        } else if (a[k] < b[k]) {
+//                            allHands[j].setRank(allHands[i].getRank() + 1);
+//                            System.out.println(allHands[j].getRank());
+//                        }
+//                    }
+//                }
+//                System.out.println("rank of line " + i + ": " + allHands[i].getRank());
+
+        for (int i = 0; i < allHands.length; i++) {
+            for (int j = 0; j < i; j++) {
+                int numOfweakerHands = 0;
+                if ()
+
+            }
         }
-
-
-
     }
 }
+//    }
+//}

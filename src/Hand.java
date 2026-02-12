@@ -4,6 +4,12 @@ public class Hand {
     private int hand;
     private int rank;
 
+    public int[] getCounter() {
+        return counter;
+    }
+
+    private int[] counter;
+
     public int getRank() {
         return rank;
     }
@@ -24,12 +30,17 @@ public class Hand {
         return hand;
     }
 
+    public void setHand(int hand) {
+        this.hand = hand;
+    }
 
-    public Hand(int[] cards, int bid, int hand, int rank) {
+
+    public Hand(int[] cards, int bid, int hand, int rank, int[] counter) {
         this.cards = cards;
         this.bid = bid;
         this.hand = hand;
         this.rank = rank;
+        this.counter = counter;
     }
 
     public boolean isStronger(int handCurrent, int handBefore, int[] cardsCurrent, int[] cardsBefore) {
@@ -43,9 +54,13 @@ public class Hand {
                     return true;
                 } else if (cardsCurrent[i] < cardsBefore[i]) {
                     return false;
+                } else if (cardsCurrent[i] == cardsBefore[i]){
+                    i += 0;
                 }
             }
         }
         return false;
     }
+
+
 }

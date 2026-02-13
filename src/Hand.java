@@ -62,5 +62,14 @@ public class Hand {
         return false;
     }
 
+    public int[] switchJack(int[] currentHand) {
+        for (int i = 0; i < 5; i++) {
+            if(currentHand[i] == 11){
+                currentHand[i] = 1;
+            }
+        }
+        return currentHand;
+    }
+
 
 }

@@ -37,14 +37,13 @@ public class Main2 {
         int index = 0;
 
         for (String line : lines) {
-            int[] counter = new int[13];
+            int[] counter = new int[14];
             String[] bid = line.split("\\|");
             String bidValue = bid[0];
             int actualBidValue = Integer.parseInt(bid[1]);
 
             String[] numbers = bidValue.split(",");
             int[] values = new int[numbers.length];
-            String[] object = new String[numbers.length];
 
             for (int j = 0; j < numbers.length; j++) {
                 if (numbers[j].equals("Jack")) {
@@ -63,7 +62,7 @@ public class Main2 {
             for (int k = 2; k <= 14; k++) {
                 for (int j = 0; j < 5; j++) {
                     if (values[j] == k) {
-                        counter[k - 2] += 1;
+                        counter[k - 1] += 1;
                     }
                 }
             }
@@ -72,7 +71,7 @@ public class Main2 {
             int two = 0;
             int singles = 0;
 
-            for (int l = 0; l < 13; l++) {
+            for (int l = 0; l < 14; l++) {
                 if (counter[l] == 5) {
                     fiveOfAKind += 1;
                     handCombo = 7;
@@ -106,11 +105,19 @@ public class Main2 {
                 handCombo = 1;
             }
 
-            Hand h = new Hand(values, actualBidValue, handCombo, 0);
+            Hand h = new Hand(values, actualBidValue, handCombo, 0, counter);
             allHands[index] = h;
 
             index++;
         }
+
+        System.out.println("Number of five of a kind: " + fiveOfAKind);
+        System.out.println("Number of full house: " + fullHouse);
+        System.out.println("Number of four of a kind: " + fourOfAKind);
+        System.out.println("Number of three of a kind: " + threeOfAKind);
+        System.out.println("Number of two pair: " + twoPair);
+        System.out.println("Number of one pair: " + onePair);
+        System.out.println("Number of high card: " + highCard);
 
         //part 2
         for (int i = 0; i < allHands.length; i++) {
@@ -130,17 +137,79 @@ public class Main2 {
             }
         }
 
-
-
         int totalBid = 0;
         for (int i = 0; i < allHands.length; i++) {
             int bid = allHands[i].getBid();
             int rank = allHands[i].getRank() + 1;
 
-            int eachbid = bid * rank;
-            totalBid = totalBid + eachbid;
+            int eachBid = bid * rank;
+            totalBid = totalBid + eachBid;
         }
 
-        System.out.println("total bid: " + totalBid);
+        System.out.println("Total Bid Value: " + totalBid);
+
+        //Part 3
+
+        for (int i = 0; i < allHands.length; i++) {
+            int[] counter2 = allHands[i].getCounter();
+            int[] currentHand = allHands[i].getCards();
+            if (allHands[i].getHand() == 6 || allHands[i].getHand() == 5){
+                if (counter2[10] >= 1){
+                    allHands[i].setHand(7);
+                }
+                allHands[i].switchJack(currentHand);
+            } else if (allHands[i].getHand() == 4){
+                if (counter2[10] >= 1){
+                    allHands[i].setHand(6);
+                }
+                allHands[i].switchJack(currentHand);
+            } else if (allHands[i].getHand() == 3) {
+                if (counter2[10] == 2){
+                    allHands[i].setHand(6);
+                } else if (counter2[10] == 1) {
+                    allHands[i].setHand(5);
+                }
+                allHands[i].switchJack(currentHand);
+            } else if (allHands[i].getHand() == 2) {
+                if (counter2[10] >= 1){
+                    allHands[i].setHand(4);
+                }
+                allHands[i].switchJack(currentHand);
+            } else if (allHands[i].getHand() == 1) {
+                if (counter2[10] == 1){
+                    allHands[i].setHand(2);
+                }
+                allHands[i].switchJack(currentHand);
+            }
+        }
+
+        for (int i = 0; i < allHands.length; i++) {
+            int numOfweakerHands = 0;
+            for (int j = 0; j < allHands.length; j++) {
+                int currentHand = allHands[i].getHand();
+                int handBefore = allHands[j].getHand();
+                int[] currentCards = allHands[i].getCards();
+                int[] cardsBefore = allHands[j].getCards();
+                boolean stronger = allHands[i].isStronger(currentHand, handBefore, currentCards, cardsBefore);
+
+                if (stronger == true){
+                    numOfweakerHands ++;
+                }
+
+                allHands[i].setRank(numOfweakerHands);
+            }
+        }
+
+        int totalBidWithJacks = 0;
+        for (int i = 0; i < allHands.length; i++) {
+            int bid = allHands[i].getBid();
+            int rank = allHands[i].getRank() + 1;
+
+            int eachBid = bid * rank;
+            totalBidWithJacks = totalBidWithJacks + eachBid;
+        }
+
+        System.out.println("Total Bid Value With Jacks Wild: " + totalBidWithJacks);
+
     }
 }

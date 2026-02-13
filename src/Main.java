@@ -29,7 +29,7 @@ public class Main {
 
         Hand[] allHands = new Hand[5];
         for (String line : lines) {
-            int[] counter = new int[13];
+            int[] counter = new int[14];
             String[] bid = line.split("\\|");
             String bidValue = bid[0];
             int actualBidValue = Integer.parseInt(bid[1]);
@@ -56,7 +56,7 @@ public class Main {
             for (int i = 2; i <= 14 ; i++) {
                 for (int j = 0; j < 5; j++){
                     if (values[j] == i){
-                        counter[i-2] += 1;
+                        counter[i-1] += 1;
                     }
                 }
             }
